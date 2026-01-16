@@ -1,0 +1,66 @@
+"""
+    # GRAMMAR for Bryce Code file.
+
+
+    # Production Rules to be used in the Parser.
+
+    Bryce_Code_File = ^ Statements # ^ is start of file token.
+
+    Statements = | Statement Statements
+                 | $                    # End of File token.
+
+    Statement = | "print" Expression
+                | Input_Statement
+                | Declaration_Statement
+                | variable_name '=' Expression # Assignment.
+
+    Expression = | Input_Statement
+                 | '(' Expression ')'
+                 | variable_name
+                 | Literal
+
+    Literal = | string
+              | char
+              | number
+              | boolean
+
+    Input_Statement = | "input" '(' ')'
+                      | "input"
+
+    Declaration_Statement = | 'declare' type_name variable_name
+                            | type_name variable_name
+
+    # Uppercase are Non-Terminals.
+    # Lowercase are individual tokens (terminals).
+
+
+# -----------------------------------------------------------
+# Extra information about grammars that I haven't edited yet:
+# -----------------------------------------------------------
+
+    # Regular Expressions to be matched in Parser.
+    # Use the match of earliest precedence. Break ties when the expression
+    # has more than one match by using the match of shortest size.
+
+    Prologue = "^*\n"           # ^ is start of file, * is 0+ characters. Finds shortest match.
+
+    WS = "( |\t\n)+" # Only use in Lexer. We'll define whitespace as any sequence of 1 
+                   # or more space and/or tab characters.
+                   # White space will not be fed to the parser.
+
+    Number = | "[0-9]+ ('.' [0-9]*)?""  # Returns int or float depending on if '.'
+             | "'.' [0-9]+"             # is present.
+                                        # Numbers do not have spaces before them.
+                                        # This helps us with transcriptions that 
+                                        # contain numbers.
+
+    Transcription = "*(\n|$)" # String, terminating in a newline or
+                           # until the end of the file.
+    
+
+    $ = End of File Token.
+
+    Note: Non-terminals that can be produced are capitalized.
+          terminals are Tokens that are constructed in the Lexer.
+
+"""

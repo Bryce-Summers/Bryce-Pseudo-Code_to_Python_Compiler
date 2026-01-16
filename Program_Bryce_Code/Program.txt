@@ -1,0 +1,14 @@
+print input
+print input ()
+print( input)
+print(input())
+print (input (  )   )
+
+x = input()
+input()
+print(x)
+print(x)
+
+char x
+x = input()
+print  (    x)
